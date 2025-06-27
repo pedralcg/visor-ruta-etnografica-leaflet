@@ -1,0 +1,174 @@
+/* === 1. Box sizing global para layout más predecible === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* === 2. Variables para colores y estilos globales === */
+:root {
+  --color-linea: #ba3b0a;                         /* Color de la línea de ruta */
+  --color-punto: #0066cc;                         /* Color de los puntos */
+  --color-texto-sombra: rgba(0, 0, 0, 0.75);      /* Sombra del texto de puntos */
+  --color-background-panel-leaflet: #f0f0f0;      /* Fondo del panel lateral */
+  --color-panel-hover: #e8e8e8;                   /* Color al pasar el ratón por elementos del panel */
+}
+
+/* === 3. Estructura base === */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+}
+
+/* === 4. Marca de agua (abajo a la izquierda) === */
+#marca-agua {
+  position: absolute;
+  bottom: 30px;
+  left: 5px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  pointer-events: auto;
+  max-width: 500px;
+  min-width: 250px;
+  width: auto;
+  box-sizing: border-box;
+  line-height: 1.3;
+  user-select: text;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#marca-agua a,
+#marca-agua a:visited {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* === 5. Título superior centrado === */
+#titulo-ruta {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  user-select: none;
+  z-index: 1000;
+  max-width: 90vw;
+}
+
+/* === 6. Etiqueta de puntos de interés === */
+.titulo-punto span {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-shadow:
+    -1px -1px 2px var(--color-texto-sombra),
+    1px -1px 2px var(--color-texto-sombra),
+    -1px 1px 2px var(--color-texto-sombra),
+    1px 1px 2px var(--color-texto-sombra);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+
+/* === 7. Efecto hover popups === */
+/* Miniaturas en los popups (galería GLightbox) */
+.leaflet-popup-content .glightbox img {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Efecto al pasar el ratón */
+.leaflet-popup-content .glightbox:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  border-color: #888;
+}
+
+/* === 8. Panel lateral de Leaflet PanelLayers === */
+.leaflet-control .leaflet-panel-layers {
+  margin-top: 100px;
+  margin-right: 100px;
+  border: 2px solid #aaa;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--color-background-panel-leaflet);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+}
+
+/* === 9. Cabeceras de grupo en el panel (ej. Mapas base) === */
+.leaflet-panel-layers-group-label {
+  font-weight: bold;
+  padding: 10px 16px;
+  background-color: var(--color-background-panel-leaflet);
+  border-top: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+
+/* === 11. Ítems individuales (checkbox o radio) === */
+.leaflet-panel-layers-item label {
+  display: flex !important;
+  align-items: center;
+  padding: 6px 12px;
+  flex-direction: row; /* Orden natural */
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Forzar que el input esté antes que cualquier otro contenido */
+.leaflet-panel-layers-item > label > input {
+  order: 0;
+  margin: 0 5px 0 0 !important; /* margen derecha para separar el checkbox del texto */
+}
+
+/* El resto del contenido dentro del label */
+.leaflet-panel-layers-item > label > span,
+.leaflet-panel-layers-item > label > div {
+  order: 1;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+/* === 12. Leyenda inline === */
+.legend-line {
+  width: 20px;
+  height: 3px;
+  background-color: var(--color-linea);
+  display: inline-block;
+}
+
+.legend-point {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-punto);
+  border-radius: 50%;
+  display: inline-block;
+}
+

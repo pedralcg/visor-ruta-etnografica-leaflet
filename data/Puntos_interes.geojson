@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "Puntos_interes",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "nombre": "Inicio / Fin de Ruta", "descripcion": "Dispone de aparcamiento disuario", "imagen": "assets/img/aparcamiento.jpg;assets/img/aparcamiento2.jpeg;assets/img/aparcamiento3.png", "url": "https://maps.app.goo.gl/7RYaArhxYNdust7W8", "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.877971498036658, 37.616039338139053 ] } },
+{ "type": "Feature", "properties": { "id": 2, "nombre": "El Lazareto", "descripcion": "Vistas desde el Lazareto", "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.882812492400553, 37.613841726773877 ] } },
+{ "type": "Feature", "properties": { "id": 3, "nombre": "Cementerio", "descripcion": "Vistas al cementerio", "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.885611282597042, 37.612164076258168 ] } },
+{ "type": "Feature", "properties": { "id": 4, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.876611457932977, 37.611572697844593 ] } },
+{ "type": "Feature", "properties": { "id": 5, "nombre": "Chorrillo", "descripcion": "¿Muy bonito?", "imagen": null, "url": "www.google.com", "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.87536642435178, 37.61345091415938 ] } },
+{ "type": "Feature", "properties": { "id": 6, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.864939256114226, 37.617717840929778 ] } },
+{ "type": "Feature", "properties": { "id": 7, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.863724129167174, 37.616745524185973 ] } },
+{ "type": "Feature", "properties": { "id": 8, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.865368547242094, 37.62148367466861 ] } },
+{ "type": "Feature", "properties": { "id": 9, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.861035910298033, 37.622331497731231 ] } },
+{ "type": "Feature", "properties": { "id": 10, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.867135329725772, 37.623214685030916 ] } },
+{ "type": "Feature", "properties": { "id": 11, "nombre": null, "descripcion": null, "imagen": null, "url": null, "categoria": null, "fecha": null, "autor": null, "icono": null }, "geometry": { "type": "Point", "coordinates": [ -0.869384263066714, 37.623912873646226 ] } }
+]
+}
