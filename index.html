@@ -7,15 +7,32 @@
   <title>Ruta de las Fundiciones</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-panel-layers/dist/leaflet-panel-layers.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 </head>
 <body>
   <div id="map">
   </div>
+  <!-- Modal de Pronóstico -->
+  <div id="modal-pronostico" class="modal hidden">
+    <div class="modal-content">
+      <button id="cerrar-modal-pronostico" class="cerrar-modal">✖</button>
+      <div id="contenido-pronostico" class="contenido-pronostico">
+        <h2>🔮 Pronóstico 5 días</h2>
+        <p id="ubicacion-pronostico"></p>
+        <div id="tabs-pronostico" class="tabs-pronostico"></div>
+        <div id="contenido-dia-pronostico" class="contenido-dia"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-panel-layers/dist/leaflet-panel-layers.min.js"></script>
+  <script src="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script src="https://unpkg.com/leaflet-providers/leaflet-providers.js"></script>
   <script src="script.js"></script>
   </body>
 </html>

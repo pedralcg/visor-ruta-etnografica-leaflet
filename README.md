@@ -9,8 +9,10 @@ Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, dise�
 * 📍 Visualización de una **ruta principal** mediante GeoJSON con estilo personalizado.
 * 🏛️ **Puntos de interés** interactivos con texto, imágenes ampliables y enlaces externos.
 * 📷 Galería de imágenes para cada punto con **GLightbox**.
-* 🔘 **Control de capas** para activar/desactivar rutas y puntos de interés.
-* 🚀 Animación de enfoque al cargar la ruta (flyToBounds).
+* 🔘 **Control de capas jerárquico** con leyenda visual, usando `Leaflet.Control.Layers.Tree`.
+* 🗺️ **Múltiples mapas base**: OSM, PNOA, CartoDB, Esri, OpenTopoMap.
+* ⛅ **Visualización del tiempo actual** y **pronóstico a 5 días** con datos de OpenWeather y diseño modal.
+* 🚀 Animación de enfoque al cargar la ruta (`flyToBounds`).
 * 📐 Escala gráfica dinámica y marca de agua informativa.
 * 📱 Diseño responsive para móviles y tablets.
 
@@ -18,15 +20,19 @@ Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, dise�
 
 ## 2. 🛠️ Estado actual y hoja de ruta
 
-**Estado actual:**
+**Estado actual:**  
+Proyecto funcional (`v0.2`) con las siguientes mejoras incorporadas:
 
-* Proyecto funcional (v0.1), con todas las capas cargadas dinámicamente y estructura base terminada.
+* Añadida la **visualización meteorológica** (tiempo actual + pronóstico) en modal reutilizable.
+* Sustituido el control tradicional de capas por un sistema **jerárquico con leyenda**.
+* Añadidos **nuevos mapas base** (CartoDB, Esri, OpenTopoMap...).
 
 **Últimas mejoras:**
 
 * Galería multimedia con GLightbox en popups.
-* Optimización del panel de capas lateral.
-* Diseño responsive inicial con control de escala y metainformación.
+* Mejora del diseño responsive y panel de capas lateral.
+* Integración de información climática interactiva.
+* Ampliación de mapas base y reorganización de capas.
 
 **Próximas mejoras previstas:**
 
@@ -36,7 +42,6 @@ Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, dise�
 | 🔜        | Mostrar perfil de elevación con [`leaflet-elevation`](https://github.com/MrMufflon/Leaflet.Elevation)       |
 | 🔜        | Agrupar puntos con [`Leaflet.markercluster`](https://github.com/Leaflet/Leaflet.markercluster)              |
 | 🔜        | Buscador de puntos con [`Leaflet.Control.Search`](https://github.com/stefanocudini/leaflet-control-search)  |
-| 🔜        | Organización jerárquica de capas y más variedad de fondos base                                              |
 | 🧪        | Exportación de mapa como imagen o GPX                                                                       |
 
 ---
@@ -51,6 +56,8 @@ Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, dise�
 
 * [Leaflet.js](https://leafletjs.com/)
 * [GLightbox](https://github.com/biati-digital/glightbox)
+* [Leaflet.Control.Layers.Tree](https://github.com/jjimenezshaw/leaflet-layers-tree)
+* [OpenWeather API](https://openweathermap.org/)
 * HTML5, CSS3, JavaScript (Vanilla)
 * Formatos de datos: GeoJSON, JSON
 
@@ -120,7 +127,15 @@ Este archivo permite modificar fácilmente la ubicación o atributos de los punt
 
 ---
 
-## 9. 🐞 Reportar bugs y solicitar mejoras
+## 9. 📋 Registro de bugs y problemas conocidos
+
+Este visor está en desarrollo activo. A continuación se listan los errores detectados y su estado de resolución para facilitar el seguimiento.
+
+🔗 Consulta el archivo [`BUGS.md`](./BUGS.md) para más detalles y para ver el historial completo de errores actuales o resueltos.
+
+---
+
+## 10. 🐞 Reportar bugs y solicitar mejoras
 
 Si encuentras algún error o tienes ideas para nuevas funcionalidades, por favor:
 
@@ -131,7 +146,7 @@ Esto ayuda a mantener el proyecto actualizado y útil para todos.
 
 ---
 
-## 10. 📬 Contacto
+## 11. 📬 Contacto
 
 Para dudas, sugerencias o reporte de errores:
 
@@ -142,7 +157,7 @@ Técnico ambiental especializado en SIG, teledetección y desarrollo de visores 
 
 ---
 
-## 11. 📄 Licencia
+## 12. 📄 Licencia
 
 Este proyecto está disponible bajo la licencia **MIT**.
 
