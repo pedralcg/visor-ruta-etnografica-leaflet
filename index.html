@@ -12,8 +12,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
 </head>
 <body>
-  <div id="map">
+  <div id="map"></div>
+
+  <!-- Slider -->
+  <div class="slider-container">
+    <input type="range" id="slider-ruta" min="0" max="100" value="0.001">
+    <span id="slider-value">0.0 km / 0.0 km</span>
   </div>
+
   <!-- Modal de Pronóstico -->
   <div id="modal-pronostico" class="modal hidden">
     <div class="modal-content">
@@ -33,6 +39,7 @@
   <script src="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
   <script src="https://unpkg.com/leaflet-providers/leaflet-providers.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ewoken/Leaflet.MovingMarker/MovingMarker.js"></script>
   <script src="script.js"></script>
   </body>
 </html>

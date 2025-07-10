@@ -13,6 +13,7 @@ Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, dise�
 * 🗺️ **Múltiples mapas base**: OSM, PNOA, CartoDB, Esri, OpenTopoMap.
 * ⛅ **Visualización del tiempo actual** y **pronóstico a 5 días** con datos de OpenWeather y diseño modal.
 * 🚀 Animación de enfoque al cargar la ruta (`flyToBounds`).
+* 📏 **Slider interactivo de progreso de ruta** que permite desplazar un marcador a lo largo de la ruta y muestra la distancia recorrida.
 * 📐 Escala gráfica dinámica y marca de agua informativa.
 * 📱 Diseño responsive para móviles y tablets.
 
@@ -21,8 +22,9 @@ Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, dise�
 ## 2. 🛠️ Estado actual y hoja de ruta
 
 **Estado actual:**  
-Proyecto funcional (`v0.2`) con las siguientes mejoras incorporadas:
+Proyecto funcional (`v0.3`) con las siguientes mejoras incorporadas:
 
+* **Slider interactivo de progreso de ruta** con marcador dinámico, permitiendo un desplazamiento suave y visualización de kilómetros.
 * Añadida la **visualización meteorológica** (tiempo actual + pronóstico) en modal reutilizable.
 * Sustituido el control tradicional de capas por un sistema **jerárquico con leyenda**.
 * Añadidos **nuevos mapas base** (CartoDB, Esri, OpenTopoMap...).
@@ -33,12 +35,14 @@ Proyecto funcional (`v0.2`) con las siguientes mejoras incorporadas:
 * Mejora del diseño responsive y panel de capas lateral.
 * Integración de información climática interactiva.
 * Ampliación de mapas base y reorganización de capas.
+* **Control de progreso de ruta con slider interactivo.**
+* Mejoras visuales: Implementación de halos y sombras para los marcadores, y sincronización de iconos en leyenda.
+* Contenido de ruta actualizado y gestión de imágenes optimizada (2025-07-10).
 
 **Próximas mejoras previstas:**
 
 | Prioridad | Mejora prevista                                                                                             |
 | --------- | ----------------------------------------------------------------------------------------------------------- |
-| 🔜        | Integrar animación de marcador con [`Leaflet.MovingMarker`](https://github.com/ewoken/Leaflet.MovingMarker) |
 | 🔜        | Mostrar perfil de elevación con [`leaflet-elevation`](https://github.com/MrMufflon/Leaflet.Elevation)       |
 | 🔜        | Agrupar puntos con [`Leaflet.markercluster`](https://github.com/Leaflet/Leaflet.markercluster)              |
 | 🔜        | Buscador de puntos con [`Leaflet.Control.Search`](https://github.com/stefanocudini/leaflet-control-search)  |
@@ -57,6 +61,7 @@ Proyecto funcional (`v0.2`) con las siguientes mejoras incorporadas:
 * [Leaflet.js](https://leafletjs.com/)
 * [GLightbox](https://github.com/biati-digital/glightbox)
 * [Leaflet.Control.Layers.Tree](https://github.com/jjimenezshaw/leaflet-layers-tree)
+* [Leaflet.MovingMarker](https://github.com/ewoken/Leaflet.MovingMarker)
 * [OpenWeather API](https://openweathermap.org/)
 * HTML5, CSS3, JavaScript (Vanilla)
 * Formatos de datos: GeoJSON, JSON

@@ -7,11 +7,22 @@
 
 /* === 2. Variables para colores y estilos globales === */
 :root {
-  --color-linea: #ba3b0a;                         /* Color de la línea de ruta */
-  --color-punto: #0066cc;                         /* Color de los puntos */
-  --color-texto-sombra: rgba(0, 0, 0, 0.75);      /* Sombra del texto de puntos */
-  --color-background-panel-leaflet: #f0f0f0;      /* Fondo del panel lateral */
-  --color-panel-hover: #e8e8e8;                   /* Color al pasar el ratón por elementos del panel */
+  --color-linea: #ba3b0a;
+  --color-punto: #0066cc;
+  --color-texto-sombra: rgba(0, 0, 0, 0.75);
+  --color-background-panel-leaflet: #f0f0f0;
+  --color-panel-hover: #e8e8e8;
+
+  /* NEW: Variables para el slider y el span (simplificadas) */
+  --slider-height: 8px; /* Altura de la pista del slider */
+  --slider-thumb-size: 18px; /* Tamaño del "mango" del slider */
+  --slider-track-bg: rgba(0, 0, 0, 0.15); /* Color de la pista */
+  --slider-thumb-bg: var(--color-linea); /* Color del "mango" */
+  --slider-border-radius: 4px; /* Radio de borde para elementos del slider */
+  --slider-shadow-light: 0 1px 3px rgba(0,0,0,0.1); /* Sombra ligera */
+  --slider-shadow-medium: 0 2px 5px rgba(0,0,0,0.2); /* Sombra media */
+
+  --span-text-color: #333;
 }
 
 /* === 3. Estructura base === */
@@ -19,6 +30,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: Arial, sans-serif; /* Poner una fuente base aquí */
 }
 
 #map {
@@ -36,7 +48,7 @@ html, body {
   background: rgba(255, 255, 255, 0.5);
   padding: 6px 8px;
   border-radius: 6px;
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; - Ya definido en body */
   pointer-events: auto;
   max-width: 500px;
   min-width: 250px;
@@ -66,7 +78,7 @@ html, body {
   background: rgba(255, 255, 255, 0.85);
   padding: 10px 20px;
   border-radius: 8px;
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; - Ya definido en body */
   text-align: center;
   user-select: none;
   z-index: 1000;
@@ -106,7 +118,7 @@ html, body {
 /* === CONTENEDOR GENERAL DEL PANEL EXPANDIDO === */
 .leaflet-control-layers-expanded {
   padding: 10px;
-  background-color: var(--color-background-panel-leaflet, #f9f9f9);
+  background-color: var(--color-background-panel-leaflet, #f9f9f9); /* Usa tu variable aquí */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 2px solid #aaa;
   border-radius: 8px;
@@ -115,9 +127,10 @@ html, body {
   gap: 12px; /* espacio entre grupos */
 }
 
+
 /* === PANEL LATERAL DEL CONTROL JERÁRQUICO === */
 .leaflet-control-layers-tree {
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; - Ya definido en body */
   font-size: 14px;
   color: #333;
   background: transparent;
@@ -164,37 +177,110 @@ html, body {
   display: inline-block;
   margin-right: 6px;
   border-radius: 2px;
+  vertical-align: middle;
 }
 
 .legend-point {
-  width: 10px;
-  height: 10px;
-  background-color: var(--color-punto, #ba3b0a);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 6px;
+width: 24px; /* Ajusta este tamaño para que la imagen se vea bien en la leyenda */
+height: 24px; /* Ajusta este tamaño */
+display: inline-block;
+margin-right: 6px;
+background-image: url('assets/img/marcador-puntos.png'); /* Ruta a tu imagen */
+background-size: contain; /* Ajusta la imagen dentro del contenedor */
+background-repeat: no-repeat;
+background-position: center center; /* Centra la imagen */
+vertical-align: middle;
 }
 
-/*! === BOTÓN "Ver tiempo actual" con estilo coherente con el panel === */
-#btn-clima {
-  font-family: Arial, sans-serif;
-  font-size: 14px;
+/*! === BOTONES "Ver tiempo actual" y "Pronóstico 5 días" === */
+.btn-clima {
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 13px;
   font-weight: bold;
-  padding: 6px 8px;
-  margin: 0 0 4px 0;
-  width: 100%;
-  background-color: var(--color-background-panel-leaflet);
-  border: 1px solid #f9f9f9;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   color: #333;
-  text-align: left;
+  padding: 6px 10px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: none; /* <--- CAMBIO AQUÍ: Elimina el borde */
+  background-color: transparent; /* <--- CAMBIO OPCIONAL: Si quieres que el botón no tenga color de fondo por defecto */
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-#btn-clima:hover {
-  background-color: #f0f0f0;
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+
+.btn-clima:hover {
+  background-color: var(--color-panel-hover, #e8e8e8);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12); /* Slightly more visible shadow on hover */
+  transform: translateY(-1px);
+}
+
+.btn-clima:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Even softer shadow when pressed */
+}
+
+/* --- Estilos para las secciones colapsables personalizadas (como Previsión meteorológica) --- */
+
+.custom-collapsible-section {
+    margin-top: 10px; /* Espacio superior para separarla */
+    border-top: 1px solid #ddd; /* Línea divisoria */
+    padding-top: 10px; /* Relleno superior */
+}
+
+.custom-collapsible-header {
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; /* Asegúrate de usar la misma fuente */
+  font-size: 13px; /* O el tamaño que te parezca más cercano al de las cabeceras de la librería, normalmente son similares a los labels */
+  font-weight: bold; /* Esto es clave para las cabeceras */
+  color: #333; /* Color de texto que usa Leaflet por defecto */
+  padding: 6px 10px; /* Relleno similar al que usa la librería para los elementos de control */
+  cursor: pointer;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px; /* Bordes ligeramente redondeados */
+  box-shadow: none;
+  border: none;
+}
+
+.custom-collapsible-header:hover {
+  background-color: var(--color-panel-hover, #e8e8e8) /* Ligero cambio al pasar el ratón */
+}
+
+.custom-collapsible-header .header-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-collapsible-header .toggle-icon {
+    margin-left: 8px;
+    font-size: 10px;
+    transition: transform 0.2s ease; /* Animación de rotación */
+}
+
+/* Estilos para el contenido que se colapsa */
+.custom-collapsible-content {
+    background-color: transparent;
+    border: none;
+    border-top: none; /* Evitar doble borde */
+    border-radius: 0 0 4px 4px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* Muy importante para ocultar el contenido */
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Estado expandido del contenido */
+.custom-collapsible-content[style*="block"] { /* Esto se activa cuando display es 'block' */
+    max-height: 500px; /* Un valor lo suficientemente grande para todo el contenido */
+    opacity: 1;
 }
 
 
@@ -222,7 +308,7 @@ html, body {
   overflow-y: auto;
   max-width: 400px;
   width: 90%;
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; - Ya definido en body */
   position: relative;
 }
 
@@ -297,4 +383,127 @@ html, body {
   height: 42px;
   object-fit: contain;
   margin: 4px 0;
+}
+
+/* === Estilos para el Slider de la Ruta y su Indicador === */
+/* Contenedor del slider y el span para agruparlos */
+.slider-container {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    width: 60%; /* Ajusta el ancho según necesites */
+    max-width: 600px; /* Límite máximo para que no sea demasiado largo */
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre el slider y el span */
+    z-index: 1000;
+    padding: 10px 15px; /* Añadir padding para que no se pegue a los bordes */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo ligeramente transparente */
+    border-radius: 10px;
+    box-shadow: var(--slider-shadow-medium); /* Sombra ligera */
+}
+
+#slider-ruta {
+    flex-grow: 1; /* Para que el slider ocupe el espacio restante */
+    -webkit-appearance: none; /* Eliminar estilos por defecto de Chrome/Safari */
+    appearance: none;
+    width: 100%;
+    height: var(--slider-height);
+    background: transparent; /* El fondo se define en la pista */
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Estilo de la PISTA del slider (la barra) */
+#slider-ruta::-webkit-slider-runnable-track {
+    width: 100%;
+    height: var(--slider-height);
+    background: var(--slider-track-bg);
+    border-radius: var(--slider-border-radius);
+    /* NEW: Relleno de color a la izquierda del pulgar (progreso) */
+    background: linear-gradient(to right,
+        var(--slider-thumb-bg) 0%,
+        var(--slider-thumb-bg) var(--_slider-fill-percent, 0%),
+        var(--slider-track-bg) var(--_slider-fill-percent, 0%),
+        var(--slider-track-bg) 100%
+    );
+}
+
+#slider-ruta::-moz-range-track {
+    width: 100%;
+    height: var(--slider-height);
+    background: var(--slider-track-bg);
+    border-radius: var(--slider-border-radius);
+    /* NEW: Relleno para Firefox */
+    background: linear-gradient(to right,
+        var(--slider-thumb-bg) 0%,
+        var(--slider-thumb-bg) var(--_slider-fill-percent, 0%),
+        var(--slider-track-bg) var(--_slider-fill-percent, 0%),
+        var(--slider-track-bg) 100%
+    );
+}
+
+/* Estilo del MANGO del slider (el círculo/pulgar) */
+#slider-ruta::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    border-radius: 50%; /* Redondo */
+    background: var(--slider-thumb-bg);
+    border: 2px solid white; /* Borde blanco para destacarse */
+    box-shadow: var(--slider-shadow-light);
+    margin-top: calc((var(--slider-height) - var(--slider-thumb-size)) / 2); /* Centrar verticalmente */
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+#slider-ruta::-moz-range-thumb {
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    border-radius: 50%;
+    background: var(--slider-thumb-bg);
+    border: 2px solid white;
+    box-shadow: var(--slider-shadow-light);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+/* Efecto hover/active en el MANGO */
+#slider-ruta::-webkit-slider-thumb:hover,
+#slider-ruta::-moz-range-thumb:hover {
+    background: #c74b1c; /* Un tono un poco más oscuro para el hover */
+    box-shadow: var(--slider-shadow-medium);
+}
+
+#slider-ruta:active::-webkit-slider-thumb,
+#slider-ruta:active::-moz-range-thumb {
+    transform: scale(1.1); /* Ligeramente más grande al arrastrar */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* === Estilo del Span para mostrar el valor del Slider === */
+#slider-value {
+    font-size: 14px; /* Un poco más grande para ser legible */
+    font-weight: bold;
+    color: var(--span-text-color);
+    padding: 4px 12px; /* Ajustado el padding */
+    background-color: transparent; /* El contenedor se encarga del fondo */
+    border-radius: 6px; /* Borde más suave */
+    min-width: 90px; /* Asegurar un ancho mínimo para que el texto no salte */
+    text-align: center;
+    user-select: none;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+
+
+/* ICONO PUNTOS INTERÉS: Halo negro */
+.leaflet-marker-icon-puntos {
+  filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7)); /* Sombra negra suave */
+}
+
+/* ICONO RUTA : Halo verde */
+.leaflet-marker-icon-ruta {
+  filter: drop-shadow(0px 0px 8px rgba(0,128,0,1)); /* Sombra verde */
 }
