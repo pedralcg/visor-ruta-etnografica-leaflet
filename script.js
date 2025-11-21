@@ -702,7 +702,7 @@ const infoMarcaAgua = {
     fuenteClima: `<a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">© OpenWeather</a>`,
     web: '<a href="https://pedralcg.github.io/" target="_blank" rel="noopener noreferrer">Web</a>',
     repo: '<a href="https://github.com/pedralcg/visor-ruta-etnografica-leaflet" target="_blank" rel="noopener noreferrer">GitHub</a>',
-    licenciaCodigo: '<a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a>',
+    licenciaCodigo: '<a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>',
     licenciaContenidos: 'Todos los derechos reservados (textos e imágenes)'
 };
 
