@@ -1,45 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
-  <title>Ruta de las Fundiciones</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-panel-layers/dist/leaflet-panel-layers.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-</head>
-<body>
-  <div id="map"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <title>Ruta de las Fundiciones — pedralcg.dev</title>
+    <meta
+      name="description"
+      content="Visor interactivo de la Ruta de las Fundiciones: paradas etnográficas, galería fotográfica y pronóstico del tiempo para cada punto. Región de Murcia · pedralcg.dev"
+    />
+    <meta name="author" content="Pedro Alcoba Gómez" />
 
-  <!-- Slider -->
-  <div class="slider-container">
-    <input type="range" id="slider-ruta" min="0" max="100" value="0.001">
-    <span id="slider-value">0.0 km / 0.0 km</span>
-  </div>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Modal de Pronóstico -->
-  <div id="modal-pronostico" class="modal hidden">
-    <div class="modal-content">
-      <button id="cerrar-modal-pronostico" class="cerrar-modal">✖</button>
-      <div id="contenido-pronostico" class="contenido-pronostico">
-        <h2>🔮 Pronóstico 5 días</h2>
-        <p id="ubicacion-pronostico"></p>
-        <div id="tabs-pronostico" class="tabs-pronostico"></div>
-        <div id="contenido-dia-pronostico" class="contenido-dia"></div>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-panel-layers/dist/leaflet-panel-layers.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+    />
+  </head>
+  <body>
+    <div id="map">
+      <!-- Nota de información del visor (overlay sobre el mapa) -->
+      <div id="marca-agua">
+        <strong>Ruta y contenidos:</strong> Pedro Alcobas Cegarra<br />
+        <strong>Desarrollado por:</strong>
+        <a href="https://pedralcg.dev" target="_blank" rel="noopener noreferrer"
+          >pedralcg.dev</a
+        >
+        ·
+        <a
+          href="https://github.com/pedralcg/visor-ruta-etnografica-leaflet"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        ><br />
+        <strong>Fuente cartográfica:</strong>
+        <a href="https://www.ign.es" target="_blank" rel="noopener noreferrer"
+          >© IGN España</a
+        >
+        /
+        <a
+          href="https://www.openstreetmap.org/copyright"
+          target="_blank"
+          rel="noopener noreferrer"
+          >© OpenStreetMap</a
+        ><br />
+        <strong>Fuente climática:</strong>
+        <a
+          href="https://openweathermap.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >© OpenWeather</a
+        ><br />
+        <strong>Licencia del código:</strong>
+        <a
+          href="https://opensource.org/licenses/MIT"
+          target="_blank"
+          rel="noopener noreferrer"
+          >MIT</a
+        ><br />
+        <strong>Licencia de los contenidos:</strong> Todos los derechos
+        reservados
       </div>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-panel-layers/dist/leaflet-panel-layers.min.js"></script>
-  <script src="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-  <script src="https://unpkg.com/leaflet-providers/leaflet-providers.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/ewoken/Leaflet.MovingMarker/MovingMarker.js"></script>
-  <script src="script.js"></script>
+    <!-- Panel de perfil de elevación (reemplaza al slider; siempre visible) -->
+    <div id="elevation-panel" class="elevation-panel">
+      <div class="elevation-header">
+        <span class="elevation-title">Perfil de elevación</span>
+        <span id="slider-value" class="elevation-km" aria-live="polite"
+          >— km</span
+        >
+        <span class="elevation-stats" id="elevation-stats"></span>
+        <button
+          id="cerrar-perfil"
+          class="btn-cerrar-perfil"
+          aria-label="Cerrar perfil de elevación"
+        >
+          ✕
+        </button>
+      </div>
+      <svg id="elevation-svg" class="elevation-svg" aria-hidden="true"></svg>
+    </div>
+
+    <!-- Modal de Pronóstico -->
+    <div
+      id="modal-pronostico"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-pronostico-titulo"
+    >
+      <div class="modal-content">
+        <button
+          id="cerrar-modal-pronostico"
+          class="cerrar-modal"
+          aria-label="Cerrar pronóstico"
+        >
+          ✖
+        </button>
+        <div id="contenido-pronostico" class="contenido-pronostico">
+          <h2 id="modal-pronostico-titulo">Pronóstico</h2>
+          <div id="cuerpo-pronostico"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notificaciones (reemplaza alert()) -->
+    <div
+      id="notificacion"
+      role="alert"
+      aria-live="assertive"
+      class="notificacion"
+    ></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <a
+          href="https://pedralcg.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-brand"
+        >
+          <img
+            src="assets/img/logos/logo.png"
+            alt="Logo pedralcg.dev"
+            class="logo-footer"
+          />
+          <span class="footer-name">pedralcg.dev</span>
+        </a>
+        <!-- prettier-ignore -->
+        <p class="footer-copy">Ruta de las Fundiciones — © <span id="year"></span></p>
+        <nav class="footer-links" aria-label="Enlaces del pie de página">
+          <a
+            href="https://pedralcg.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            >pedralcg.dev</a
+          >
+          <a
+            href="https://github.com/pedralcg/visor-ruta-etnografica-leaflet"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+          <a href="mailto:pedro@pedralcg.dev">Contacto</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-panel-layers/dist/leaflet-panel-layers.min.js"></script>
+    <script src="https://unpkg.com/leaflet.control.layers.tree/L.Control.Layers.Tree.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="https://unpkg.com/leaflet-providers/leaflet-providers.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ewoken/Leaflet.MovingMarker/MovingMarker.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

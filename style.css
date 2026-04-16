@@ -1,155 +1,223 @@
-/* === 1. Box sizing global para layout más predecible === */
-*,
-*::before,
-*::after {
+/* === 1. Box sizing global === */
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* === 2. Variables para colores y estilos globales === */
+/* === 2. Variables (pedralcg.dev design tokens) === */
 :root {
-  --color-linea: #ba3b0a;
-  --color-punto: #0066cc;
-  --color-texto-sombra: rgba(0, 0, 0, 0.75);
-  --color-background-panel-leaflet: #f0f0f0;
-  --color-panel-hover: #e8e8e8;
+  --forest:      #1e5c2e;
+  --forest-mid:  #2d7a3a;
+  --earth:       #c9882a;
+  --earth-dark:  #a87020;
+  --earth-lt:    #f0d9b5;
+  --sage:        #a8c8a0;
+  --sage-lt:     #d4e8d0;
+  --bg:          #f1f6f1;
+  --surface:     #f9fbf9;
+  --border:      #e2ede2;
+  --text:        #1a2a1a;
+  --text-muted:  #445044;
 
-  /* NEW: Variables para el slider y el span (simplificadas) */
-  --slider-height: 8px; /* Altura de la pista del slider */
-  --slider-thumb-size: 18px; /* Tamaño del "mango" del slider */
-  --slider-track-bg: rgba(0, 0, 0, 0.15); /* Color de la pista */
-  --slider-thumb-bg: var(--color-linea); /* Color del "mango" */
-  --slider-border-radius: 4px; /* Radio de borde para elementos del slider */
-  --slider-shadow-light: 0 1px 3px rgba(0,0,0,0.1); /* Sombra ligera */
-  --slider-shadow-medium: 0 2px 5px rgba(0,0,0,0.2); /* Sombra media */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
 
-  --span-text-color: #333;
+  --shadow-sm: 0 1px 4px rgba(10,26,15,0.2), 0 2px 8px rgba(10,26,15,0.1);
+  --shadow-md: 0 4px 16px rgba(10,26,15,0.3), 0 8px 24px rgba(10,26,15,0.2);
+
+  --t: 220ms;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
 }
 
-/* === 3. Estructura base === */
+/* === 3. Estructura base (flex column para incluir footer) === */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Arial, sans-serif; /* Poner una fuente base aquí */
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
 }
 
 #map {
+  flex: 1;
+  min-height: 0;
   width: 100%;
-  height: 100vh;
+  position: relative; /* necesario para que slider y marca-agua se posicionen dentro */
 }
 
-/* === 4. Marca de agua (abajo a la izquierda) === */
-#marca-agua {
-  position: absolute;
-  bottom: 30px;
-  left: 5px;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.7);
-  background: rgba(255, 255, 255, 0.5);
-  padding: 6px 8px;
-  border-radius: 6px;
-  /* font-family: Arial, sans-serif; - Ya definido en body */
-  pointer-events: auto;
-  max-width: 500px;
-  min-width: 250px;
-  width: auto;
-  box-sizing: border-box;
-  line-height: 1.3;
-  user-select: none;
-  cursor: pointer;
-  z-index: 1000;
+/* === 4. Footer === */
+.footer {
+  background: var(--forest);
+  border-top: 3px solid var(--earth);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  padding: 0.6rem 1rem;
+  flex-shrink: 0;
 }
-
-#marca-agua a,
-#marca-agua a:visited {
-  color: inherit;
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #fff;
+  flex-shrink: 0;
+}
+.logo-footer { height: 24px; width: auto; }
+.footer-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.footer-copy {
+  margin: 0;
+  color: rgba(255,255,255,0.72);
+  text-align: center;
+  flex: 1;
+  line-height: 1.45;
+}
+.footer-copy a,
+.footer-license-link {
+  color: rgba(255,255,255,0.85);
   text-decoration: underline;
 }
+.footer-copy a:hover { color: var(--earth-lt); }
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.footer-links a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--t) ease;
+}
+.footer-links a:hover { color: var(--earth-lt); }
 
-/* === 5. Título superior centrado === */
+/* === 5. Notificación (reemplaza alert()) === */
+.notificacion {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: #fff;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-md);
+  z-index: 9999;
+  display: none;
+  max-width: 90vw;
+  text-align: center;
+  border-left: 4px solid var(--earth);
+}
+
+/* === 6. Título superior centrado === */
 #titulo-ruta {
   position: absolute;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.7);
-  background: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(249,251,249,0.92);
   padding: 10px 20px;
-  border-radius: 8px;
-  /* font-family: Arial, sans-serif; - Ya definido en body */
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   text-align: center;
   user-select: none;
   z-index: 1000;
   max-width: 90vw;
 }
 
-/* === 6. Etiqueta de puntos de interés === */
+/* === 7. Etiqueta de puntos de interés === */
 .titulo-punto span {
   font-weight: bold;
   font-size: 14px;
   color: white;
   text-shadow:
-    -1px -1px 2px var(--color-texto-sombra),
-    1px -1px 2px var(--color-texto-sombra),
-    -1px 1px 2px var(--color-texto-sombra),
-    1px 1px 2px var(--color-texto-sombra);
+    -1px -1px 2px rgba(0,0,0,0.75),
+    1px -1px 2px rgba(0,0,0,0.75),
+    -1px 1px 2px rgba(0,0,0,0.75),
+    1px 1px 2px rgba(0,0,0,0.75);
   pointer-events: none;
   white-space: nowrap;
 }
 
+/* === 7b. Galería en popup de paradas === */
+.popup-galeria {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
 
-/* === 7. Efecto hover popups === */
-/* Miniaturas en los popups (galería GLightbox) */
+.popup-galeria-img {
+  width: 80px;
+  height: auto;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+/* === 8. Miniaturas en popups (galería GLightbox) === */
 .leaflet-popup-content .glightbox img {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
-
-/* Efecto al pasar el ratón */
 .leaflet-popup-content .glightbox:hover img {
   transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  border-color: #888;
+  box-shadow: var(--shadow-md);
+  border-color: var(--sage);
 }
 
-/* === CONTENEDOR GENERAL DEL PANEL EXPANDIDO === */
+/* === 9. Panel de capas Leaflet === */
 .leaflet-control-layers-expanded {
   padding: 10px;
-  background-color: var(--color-background-panel-leaflet, #f9f9f9); /* Usa tu variable aquí */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid #aaa;
-  border-radius: 8px;
+  background-color: var(--surface);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
-  gap: 12px; /* espacio entre grupos */
+  gap: 12px;
+  font-family: var(--font-sans);
 }
 
-
-/* === PANEL LATERAL DEL CONTROL JERÁRQUICO === */
 .leaflet-control-layers-tree {
-  /* font-family: Arial, sans-serif; - Ya definido en body */
+  font-family: var(--font-sans);
   font-size: 14px;
-  color: #333;
+  color: var(--text);
   background: transparent;
 }
 
-/* === TÍTULOS DE GRUPOS (ej. "Mapas base", "Capas superpuestas") === */
 .leaflet-layerstree-header-pointer {
-  font-weight: bold;
-  font-size: 15px;
-  color: #222;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--forest);
 }
 
-/* === OCULTAR BOTONES DE EXPANSIÓN (+ y −) === */
 .leaflet-layerstree-closed,
 .leaflet-layerstree-opened {
   display: none !important;
 }
 
-/* === ÍTEMS INDIVIDUALES (checkbox/radio + texto) === */
 .leaflet-control-layers-selector {
   margin-right: 20px;
 }
@@ -162,18 +230,19 @@ html, body {
   gap: 8px;
   transition: background-color 0.2s ease;
   font-weight: normal;
+  font-family: var(--font-sans);
 }
 
 .leaflet-control-layers-item label:hover {
-  background-color: #f0f0f0;
+  background-color: var(--sage-lt);
   border-radius: 4px;
 }
 
-/* === ICONOS PERSONALIZADOS DE LEYENDA === */
+/* === 10. Iconos de leyenda === */
 .legend-line {
   width: 20px;
   height: 3px;
-  background-color: var(--color-linea, #1e6b8a);
+  background-color: var(--earth);
   display: inline-block;
   margin-right: 6px;
   border-radius: 2px;
@@ -181,138 +250,135 @@ html, body {
 }
 
 .legend-point {
-width: 24px; /* Ajusta este tamaño para que la imagen se vea bien en la leyenda */
-height: 24px; /* Ajusta este tamaño */
-display: inline-block;
-margin-right: 6px;
-background-image: url('assets/img/marcador-puntos.png'); /* Ruta a tu imagen */
-background-size: contain; /* Ajusta la imagen dentro del contenedor */
-background-repeat: no-repeat;
-background-position: center center; /* Centra la imagen */
-vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 6px;
+  background-image: url('assets/img/marcador-puntos.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  vertical-align: middle;
 }
 
-/*! === BOTONES "Ver tiempo actual" y "Pronóstico 5 días" === */
+/* === 11. Botones de clima === */
 .btn-clima {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
-  font-weight: bold;
-  color: #333;
+  font-weight: 600;
+  color: var(--text);
   padding: 6px 10px;
   width: 100%;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  border: none; /* <--- CAMBIO AQUÍ: Elimina el borde */
-  background-color: transparent; /* <--- CAMBIO OPCIONAL: Si quieres que el botón no tenga color de fondo por defecto */
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+  transition: background-color var(--t) ease, transform var(--t) ease;
+  border: 1.5px solid var(--border);
+  background-color: var(--bg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
 }
 
-
 .btn-clima:hover {
-  background-color: var(--color-panel-hover, #e8e8e8);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12); /* Slightly more visible shadow on hover */
+  background-color: var(--sage-lt);
+  border-color: var(--sage);
   transform: translateY(-1px);
 }
 
 .btn-clima:active {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Even softer shadow when pressed */
 }
 
-/* --- Estilos para las secciones colapsables personalizadas (como Previsión meteorológica) --- */
-
+/* === 12. Secciones colapsables personalizadas === */
 .custom-collapsible-section {
-    margin-top: 10px; /* Espacio superior para separarla */
-    border-top: 1px solid #ddd; /* Línea divisoria */
-    padding-top: 10px; /* Relleno superior */
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
 }
 
 .custom-collapsible-header {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; /* Asegúrate de usar la misma fuente */
-  font-size: 13px; /* O el tamaño que te parezca más cercano al de las cabeceras de la librería, normalmente son similares a los labels */
-  font-weight: bold; /* Esto es clave para las cabeceras */
-  color: #333; /* Color de texto que usa Leaflet por defecto */
-  padding: 6px 10px; /* Relleno similar al que usa la librería para los elementos de control */
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--forest);
+  padding: 6px 10px;
   cursor: pointer;
   background-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 4px; /* Bordes ligeramente redondeados */
+  border-radius: var(--radius-sm);
   box-shadow: none;
   border: none;
+  transition: background-color var(--t) ease;
 }
 
 .custom-collapsible-header:hover {
-  background-color: var(--color-panel-hover, #e8e8e8) /* Ligero cambio al pasar el ratón */
+  background-color: var(--sage-lt);
 }
 
 .custom-collapsible-header .header-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .custom-collapsible-header .toggle-icon {
-    margin-left: 8px;
-    font-size: 10px;
-    transition: transform 0.2s ease; /* Animación de rotación */
+  margin-left: 8px;
+  font-size: 10px;
+  transition: transform 0.2s ease;
 }
 
-/* Estilos para el contenido que se colapsa */
 .custom-collapsible-content {
-    background-color: transparent;
-    border: none;
-    border-top: none; /* Evitar doble borde */
-    border-radius: 0 0 4px 4px;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden; /* Muy importante para ocultar el contenido */
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  background-color: transparent;
+  border: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
 
-/* Estado expandido del contenido */
-.custom-collapsible-content[style*="block"] { /* Esto se activa cuando display es 'block' */
-    max-height: 500px; /* Un valor lo suficientemente grande para todo el contenido */
-    opacity: 1;
+.custom-collapsible-content.is-open {
+  max-height: 500px;
+  opacity: 1;
 }
 
-
-/* === UTILIDADES === */
+/* === 13. Utilidades === */
 .hidden {
   display: none !important;
 }
 
-/* === MODAL DE PRONÓSTICO === */
+/* === 14. Modal de Pronóstico === */
 .modal {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5); /* Fondo semitransparente */
+  background: rgba(10,26,15,0.55);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 9000;
+  padding: 1rem;
 }
 
 .modal-content {
-  background: #fff;
-  border-radius: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-md);
   padding: 20px 24px;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
-  max-width: 400px;
-  width: 90%;
-  /* font-family: Arial, sans-serif; - Ya definido en body */
+  max-width: 420px;
+  width: 100%;
+  font-family: var(--font-sans);
   position: relative;
+  color: var(--text);
 }
 
-/* Botón "X" de cerrar */
 .cerrar-modal {
   position: absolute;
   top: 10px;
@@ -321,10 +387,19 @@ vertical-align: middle;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #555;
+  color: var(--text-muted);
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--t) ease, background-color var(--t) ease;
+  line-height: 1;
 }
 
-/* === CONTENEDOR DE PESTAÑAS POR DÍA === */
+.cerrar-modal:hover {
+  color: var(--earth);
+  background: var(--earth-lt);
+}
+
+/* === 15. Pestañas de pronóstico === */
 .tabs-pronostico {
   display: flex;
   justify-content: space-between;
@@ -332,52 +407,51 @@ vertical-align: middle;
   gap: 4px;
 }
 
-/* Botones de pestañas (días) */
 .tabs-pronostico button {
   flex: 1;
   padding: 6px;
-  font-size: 13px;
-  background: #eee;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background var(--t) ease;
+  color: var(--text);
 }
 
-/* Botón de pestaña activa */
 .tabs-pronostico button.active {
-  background: #3b6b4c;
+  background: var(--forest);
+  border-color: var(--forest);
   color: white;
-  font-weight: bold;
+  font-weight: 700;
 }
 
-/* Contenedor principal del contenido del día seleccionado */
 .contenido-dia {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* === BLOQUES DE PRONÓSTICO CADA 3 HORAS === */
+/* === 16. Bloques de pronóstico horario === */
 .franja-pronostico {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; /* Permite ajuste en pantallas pequeñas */
+  flex-wrap: wrap;
   padding: 8px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
   font-size: 13px;
+  font-family: var(--font-sans);
 }
 
-/* Elementos individuales dentro de cada franja horaria */
 .franja-pronostico div {
   text-align: center;
-  flex: 1 1 33%; /* Cada dato ocupa hasta un tercio del ancho */
+  flex: 1 1 33%;
   margin-bottom: 4px;
 }
 
-/* Iconos meteorológicos más pequeños y coherentes */
 .franja-pronostico img {
   width: 42px;
   height: 42px;
@@ -385,125 +459,130 @@ vertical-align: middle;
   margin: 4px 0;
 }
 
-/* === Estilos para el Slider de la Ruta y su Indicador === */
-/* Contenedor del slider y el span para agruparlos */
-.slider-container {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%); /* Centrar horizontalmente */
-    width: 60%; /* Ajusta el ancho según necesites */
-    max-width: 600px; /* Límite máximo para que no sea demasiado largo */
-    display: flex;
-    align-items: center;
-    gap: 12px; /* Espacio entre el slider y el span */
-    z-index: 1000;
-    padding: 10px 15px; /* Añadir padding para que no se pegue a los bordes */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo ligeramente transparente */
-    border-radius: 10px;
-    box-shadow: var(--slider-shadow-medium); /* Sombra ligera */
+/* === 17. Nota de información del visor (overlay sobre el mapa) === */
+#marca-agua {
+  position: absolute;
+  bottom: 70px; /* por encima del slider (~50px) + margen */
+  left: 5px;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  color: var(--text-muted);
+  background: rgba(249,251,249,0.9);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  pointer-events: auto;
+  max-width: 420px;
+  min-width: 200px;
+  line-height: 1.45;
+  user-select: none;
+  z-index: 1000;
 }
 
-#slider-ruta {
-    flex-grow: 1; /* Para que el slider ocupe el espacio restante */
-    -webkit-appearance: none; /* Eliminar estilos por defecto de Chrome/Safari */
-    appearance: none;
-    width: 100%;
-    height: var(--slider-height);
-    background: transparent; /* El fondo se define en la pista */
-    outline: none;
-    margin: 0;
-    cursor: pointer;
+#marca-agua a,
+#marca-agua a:visited {
+  color: var(--forest-mid);
+  text-decoration: none;
 }
 
-/* Estilo de la PISTA del slider (la barra) */
-#slider-ruta::-webkit-slider-runnable-track {
-    width: 100%;
-    height: var(--slider-height);
-    background: var(--slider-track-bg);
-    border-radius: var(--slider-border-radius);
-    /* NEW: Relleno de color a la izquierda del pulgar (progreso) */
-    background: linear-gradient(to right,
-        var(--slider-thumb-bg) 0%,
-        var(--slider-thumb-bg) var(--_slider-fill-percent, 0%),
-        var(--slider-track-bg) var(--_slider-fill-percent, 0%),
-        var(--slider-track-bg) 100%
-    );
+#marca-agua a:hover {
+  text-decoration: underline;
 }
 
-#slider-ruta::-moz-range-track {
-    width: 100%;
-    height: var(--slider-height);
-    background: var(--slider-track-bg);
-    border-radius: var(--slider-border-radius);
-    /* NEW: Relleno para Firefox */
-    background: linear-gradient(to right,
-        var(--slider-thumb-bg) 0%,
-        var(--slider-thumb-bg) var(--_slider-fill-percent, 0%),
-        var(--slider-track-bg) var(--_slider-fill-percent, 0%),
-        var(--slider-track-bg) 100%
-    );
+/* === 18. Distancia en perfil de elevación === */
+.elevation-km {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--earth);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* Estilo del MANGO del slider (el círculo/pulgar) */
-#slider-ruta::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: var(--slider-thumb-size);
-    height: var(--slider-thumb-size);
-    border-radius: 50%; /* Redondo */
-    background: var(--slider-thumb-bg);
-    border: 2px solid white; /* Borde blanco para destacarse */
-    box-shadow: var(--slider-shadow-light);
-    margin-top: calc((var(--slider-height) - var(--slider-thumb-size)) / 2); /* Centrar verticalmente */
-    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-}
-
-#slider-ruta::-moz-range-thumb {
-    width: var(--slider-thumb-size);
-    height: var(--slider-thumb-size);
-    border-radius: 50%;
-    background: var(--slider-thumb-bg);
-    border: 2px solid white;
-    box-shadow: var(--slider-shadow-light);
-    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
-}
-
-/* Efecto hover/active en el MANGO */
-#slider-ruta::-webkit-slider-thumb:hover,
-#slider-ruta::-moz-range-thumb:hover {
-    background: #c74b1c; /* Un tono un poco más oscuro para el hover */
-    box-shadow: var(--slider-shadow-medium);
-}
-
-#slider-ruta:active::-webkit-slider-thumb,
-#slider-ruta:active::-moz-range-thumb {
-    transform: scale(1.1); /* Ligeramente más grande al arrastrar */
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-}
-
-/* === Estilo del Span para mostrar el valor del Slider === */
-#slider-value {
-    font-size: 14px; /* Un poco más grande para ser legible */
-    font-weight: bold;
-    color: var(--span-text-color);
-    padding: 4px 12px; /* Ajustado el padding */
-    background-color: transparent; /* El contenedor se encarga del fondo */
-    border-radius: 6px; /* Borde más suave */
-    min-width: 90px; /* Asegurar un ancho mínimo para que el texto no salte */
-    text-align: center;
-    user-select: none;
-    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
-}
-
-
-
-/* ICONO PUNTOS INTERÉS: Halo negro */
+/* === 19. Iconos de marcadores === */
 .leaflet-marker-icon-puntos {
-  filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7)); /* Sombra negra suave */
+  filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7));
 }
 
-/* ICONO RUTA : Halo verde */
 .leaflet-marker-icon-ruta {
-  filter: drop-shadow(0px 0px 8px rgba(0,128,0,1)); /* Sombra verde */
+  filter: drop-shadow(0px 0px 8px rgba(0,128,0,1));
+}
+
+/* === 20. Foco visible (accesibilidad) === */
+:focus-visible {
+  outline: 2px solid var(--earth);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* === 22. Panel de perfil de elevación === */
+.elevation-panel {
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 120px;
+  overflow: hidden;
+  transition: max-height 250ms ease, border-top-width 250ms ease;
+}
+.elevation-panel.hidden {
+  max-height: 0;
+  border-top-width: 0;
+  pointer-events: none;
+}
+.elevation-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.elevation-stats {
+  flex: 1;
+  font-weight: 400;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.btn-cerrar-perfil {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  transition: color var(--t) ease, background var(--t) ease;
+}
+.btn-cerrar-perfil:hover { color: var(--text); background: var(--border); }
+.elevation-svg {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: block;
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+}
+
+
+/* === 21. Responsive === */
+@media (max-width: 600px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-copy { flex: none; }
+  .footer-links { justify-content: center; }
+  #titulo-ruta { font-size: 13px; padding: 8px 12px; }
+  .elevation-panel { max-height: 100px; }
+  .elevation-stats { display: none; }
 }
