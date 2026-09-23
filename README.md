@@ -1,5 +1,9 @@
 # 🗺️ Visor Etnográfico con Leaflet
 
+![Visor de la Ruta de las Fundiciones en La Unión con sus paradas y perfil](https://res.cloudinary.com/dhnr62lyo/image/upload/w_1200,f_auto,q_auto/v1772720317/pedralcg.dev/projects/rwpikmnhhmy9o0rofhqy.png)
+
+**[Ver la demo en vivo](https://pedralcg.github.io/visor-ruta-etnografica-leaflet/)** · [Ficha del proyecto en pedralcg.dev](https://pedralcg.dev/projects/mapa-etnoturistico-ruta-de-las-fundiciones)
+
 Este proyecto es un visor web interactivo desarrollado con **Leaflet.js**, diseñado para mostrar rutas culturales o etnográficas junto con **puntos de interés multimedia**. Incluye popups enriquecidos, galería de imágenes, control de capas y compatibilidad con dispositivos móviles. Ideal para rutas interpretativas, senderos históricos o recursos patrimoniales georreferenciados.
 
 ---
